@@ -1,0 +1,5 @@
+ROOT=.
+DEVICE_ID[/home/studio/workspace/statusIndicators]=0311000050234e45001300035f780040b931000197969900
+DEVICE_TYPE[/home/studio/workspace/statusIndicators]=connected
+TARGET=K66F
+TARGET_CODE=0311

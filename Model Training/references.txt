@@ -1,0 +1,3 @@
+E. Feit, “Transfer Learning Image classification with MobileNet-V2”, YouTube, Feb. 20, 2022. [Online]. Available: https://www.youtube.com/watch?v=9FMVlhOGDoo
+
+S. Sahoo, “How to Train MobileNetV2 on a Custom Dataset,” Roboflow, Jun. 14, 2021. [Online]. Available: https://blog.roboflow.com/how-to-train-mobilenetv2-on-a-custom-dataset/

@@ -1,0 +1,11 @@
+Library for ArduCam
+L. Jackson, Github. Arducam Mega SPI 3mp camera library. Latest Release Aug-01-2024, https://github.com/ArduCAM/Arducam_Mega
+
+Library For LCD: 
+
+S. Staubb, mbedLCDi2c. GitHub.  I2C LED Library. Released Jan-16-2021, https://github.com/sstaub/mbedLCDi2c
+
+Library for RFID 
+M. Olejar, armMBED. MFRC522 – MIFARE RC522 RFID reader library. Mbed OS. Released 18-Dec-2013, http://os.mbed.com/users/AtomX/code/MFRC522/https://github.com/sstaub/mbedLCDi2c
+
+
