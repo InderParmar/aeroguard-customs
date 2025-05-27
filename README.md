@@ -55,4 +55,4 @@ The following hardware components are reused from the original Tap Cart system w
 
 ---
 
-**Developers**: Abhi Patel & Inderpreet Singh Parmar
+**Developers**: Abhi Patel & Inderpreet Singh Parmar & Fahad Ali Khan
