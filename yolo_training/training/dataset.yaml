@@ -1,0 +1,9 @@
+path: /content/drive/MyDrive/dataset
+
+train: images/train
+val: images/val
+
+# Classes
+names:
+  0: Knife Detected
+  1: Gun Detected
