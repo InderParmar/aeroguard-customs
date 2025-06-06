@@ -1,8 +1,71 @@
 # AeroGuard Customs: Functional and Non-Functional Requirements
 
+## Business Case 
+
+### Executive Summary
+
+AeroGuard Customs addresses a growing demand for enhanced efficiency, security, and accuracy in customs inspections and duty estimations at international airports and border crossings. Leveraging embedded AI technology integrated into a portable hardware system, AeroGuard Customs identifies and categorizes items in passenger luggage, significantly streamlining inspection processes, reducing operational costs, and mitigating risks associated with human error and revenue loss.
+
+### Problem Statement
+
+Traditional customs inspection processes rely heavily on manual checking and passenger declarations, which are prone to errors, underreporting, and inconsistent enforcement. This leads to lost revenue, security risks, long passenger wait times, and inefficient utilization of customs resources.
+
+### Project Scope Evolution
+
+The project originally began as Tap Cart, designed as a smart shopping cart leveraging embedded AI and cloud services to automate the retail checkout process. It utilized an ESP32 camera module, Firebase cloud integration, and a YoloV8 object detection model to recognize items in a shopping cart and calculate their total price, providing a frictionless shopping experience.
+
+However, after guidance from the program chair and professors emphasizing alignment with the theme of assisting immigrants or vulnerable travelers, the project evolved into AeroGuard Customs. This pivot retains the technical architecture and engineering foundation of the original Tap Cart system, significantly shifting its functional purpose from retail checkout to airport security and customs inspection.
+
+### Proposed Solution
+
+AeroGuard Customs introduces an AI-driven embedded system that automatically scans luggage contents using high-resolution imaging and advanced object-detection models. Key features include:
+
+  - Real-time luggage scanning with an ESP32-based embedded system and OV2640/OV5460 camera.
+
+  - Cloud-based AI detection (TensorFlow/YoloV8) to categorize items as taxable, restricted, or hazardous.
+
+  - Immediate computation of estimated customs duties and automated logging.
+
+  - Secure RFID/NFC activation ensuring authorized access.
+
+### Strategic Alignment
+
+The project aligns with airport authorities' strategic goals by:
+
+ - Enhancing operational efficiency through automation.
+
+- Improving accuracy and compliance in duty assessments.
+
+- Strengthening security by accurately identifying hazardous or prohibited items.
+ 
+- Improving traveler experience by reducing wait times and inspection intrusiveness.
+
+### Benefits and Opportunities
+
+- Operational Efficiency: Reduction in manual labor, inspection time, and queue lengths.
+
+- Revenue Protection: Enhanced duty collection accuracy and reduced evasion.
+
+- Security Enhancement: Real-time identification of security threats.
+
+- Scalability and Adaptability: Modular design adaptable to various international compliance standards and airport sizes.
+
+### Financial Analysis
+
+- Initial Investment: Relatively low-cost setup, leveraging existing embedded hardware (ESP32) and cloud infrastructure (Firebase).
+
+- Cost Savings: Significant reduction in labor costs and decreased losses due to duty evasion.
+
+- Revenue Increase: Improved accuracy in duty collection potentially increases revenue significantly.
+
+- Return on Investment (ROI): Expected ROI within 12-18 months, given reduced labor costs and increased customs duty collection accuracy.
+
+---
+
 ## Functional Requirements:
 
 1. **User Authentication:**
+   * RFID/NFC-based activation system.
    * Secure access limited to authorized customs officers.
 
 2. **Image Capture and Processing:**
@@ -65,6 +128,7 @@
 The system is divided into clearly defined modules for simplicity and scalability:
 
 * **Embedded System Module (ESP32 with OV2640/OV5460)**
+  * RFID/NFC Authentication
   * Camera Capture
   * Image Upload (Firebase via HTTPS)
 
@@ -142,6 +206,7 @@ The system is divided into clearly defined modules for simplicity and scalabilit
 
 ```
 Customs Officer
+   ├─ Authenticate via RFID
    ├─ Capture Luggage Image
    ├─ Upload Image to Cloud
    ├─ Receive AI Classification Results
@@ -152,6 +217,8 @@ Customs Officer
 ### Sequence Diagram:
 
 ```
+Officer → RFID Reader: Tap RFID
+RFID Reader → ESP32: Activate
 ESP32 → Camera (OV2640/OV5460): Capture Image
 Camera → ESP32: Image Data (JPEG)
 ESP32 → Firebase: Upload Image via HTTPS
@@ -165,6 +232,7 @@ ESP32 → Firebase: Log Event (DB)
 ### Component Diagram:
 
 ```
+[RFID Reader] ← SPI → [ESP32]
 [Camera Module] ← SPI/I2C → [ESP32]
 [ESP32] ← HTTPS → [Firebase Cloud Storage]
 [Firebase Cloud Storage] → [Cloud Run (Flask API + AI Model)]
@@ -174,12 +242,12 @@ ESP32 → Firebase: Log Event (DB)
 ---
 
 # Workflow Overview:
-
-1. **Image Capture**: ESP32 initiates camera capture of luggage.
-2. **Cloud Upload**: Captured image uploaded securely to Firebase.
-3. **AI Inference**: Cloud-based AI identifies items and computes duties/threat level.
-4. **Feedback**: Results are displayed clearly on LCD and communicated via alerts.
-5. **Logging**: Transaction details are securely logged for compliance/auditing purposes.
+1. **Authentication**: Officer taps RFID/NFC to activate.
+2. **Image Capture**: ESP32 initiates camera capture of luggage.
+3. **Cloud Upload**: Captured image uploaded securely to Firebase.
+4. **AI Inference**: Cloud-based AI identifies items and computes duties/threat level.
+5. **Feedback**: Results are displayed clearly on LCD and communicated via alerts.
+6. **Logging**: Transaction details are securely logged for compliance/auditing purposes.
 
 ---
 
