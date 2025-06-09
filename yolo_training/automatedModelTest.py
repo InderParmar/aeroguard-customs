@@ -4,8 +4,8 @@ import cv2
 from pathlib import Path
 
 # === CONFIGURATION ===
-MODEL_PATH = "newModelbest.pt"  # Path to your trained YOLO model
-TEST_DIR = "test_samples/"                                   # Folder containing test images
+MODEL_PATH = "newbestJune6.pt"  # Path to trained YOLO model
+TEST_DIR = "test_samples2/"                                  # Folder containing test images
 OUTPUT_DIR = "inference_results/"                           # Folder to save annotated images
 CONFIDENCE_THRESHOLD = 0.15                                 # Set confidence threshold
 
