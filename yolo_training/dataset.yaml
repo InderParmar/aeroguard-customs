@@ -1,0 +1,11 @@
+# Path to dataset root
+path: C:/Users/apatel477/Desktop/project/weapon_dataset
+
+# Train/val folder locations (relative to `path`)
+train: images/train
+val: images/val
+
+# Class names
+names:
+  0: Gun Detected
+  1: Knife Detected
