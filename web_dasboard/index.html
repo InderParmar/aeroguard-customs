@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AeroGuard Detection Dashboard</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      background: #f9f9f9;
+    }
+    img {
+      max-width: 300px;
+      margin-top: 10px;
+    }
+  </style>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<h2>🚨 Hazard Detection Dashboard</h2>
+<div id="detection"></div>
+
+<script>
+  // 🔧 Your Firebase Config (replace with your actual values)
+  const firebaseConfig = {
+    apiKey: "AIzaSyCucDhKwRdWTnzNkTIdu2ci2rFRyzIADtA",
+    authDomain: "aero-guard.firebaseapp.com",
+    databaseURL: "https://aero-guard-default-rtdb.firebaseio.com",
+    projectId: "aero-guard",
+    storageBucket: "aero-guard.firebasestorage.app",
+    messagingSenderId: "739356087732",
+    appId: "1:739356087732:web:6f69e4b94fb6e5f8858ee1"
+  };
+
+  // 🔌 Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const detectionDiv = document.getElementById("detection");
+
+  // 📡 Listen to /predictions/latest/bbox
+  db.ref("predictions/latest").on("value", (snapshot) => {
+    const data = snapshot.val();
+    console.log("DEBUG: snapshot value = ", data);
+
+    if (!data) {
+      detectionDiv.innerHTML = "<p>No detections yet.</p>";
+      return;
+    }
+
+    const label = data.label || "Unavailable";
+    const confidence = data.confidence !== undefined ? (data.confidence * 100).toFixed(2) + "%" : "Unavailable";
+    const image = data.image || "#";
+    const timestamp = data.timestamp || null;
+
+    const formattedTime = timestamp
+      ? new Date(timestamp * 1000).toLocaleString()
+      : "Invalid Date";
+
+    detectionDiv.innerHTML = `
+      <div class="card">
+        <strong>🧠 Label:</strong> ${label}<br>
+        <strong>📊 Confidence:</strong> ${confidence}<br>
+        <strong>🕒 Timestamp:</strong> ${formattedTime}<br>
+        <img src="${image}" alt="${label}" />
+      </div>
+    `;
+  });
+</script>
+
+</body>
+</html>
