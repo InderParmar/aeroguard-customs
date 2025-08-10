@@ -4,7 +4,7 @@
 
 ### Executive Summary
 
-AeroGuard Customs addresses a growing demand for enhanced efficiency, security, and accuracy in customs inspections and duty estimations at international airports and border crossings. Leveraging embedded AI technology integrated into a portable hardware system, AeroGuard Customs identifies and categorizes items in passenger luggage, significantly streamlining inspection processes, reducing operational costs, and mitigating risks associated with human error and revenue loss.
+AeroGuard Customs addresses a growing demand for enhanced efficiency, security, and accuracy in customs inspections and duty estimations at international airports and border crossings. Leveraging embedded AI technology integrated into a portable hardware system, AeroGuard Customs identifies and categorizes hazardous items (guns and knives) in passenger luggage, significantly streamlining inspection processes, reducing operational costs, and mitigating risks associated with human error and revenue loss.
 
 ### Problem Statement
 
@@ -25,8 +25,6 @@ AeroGuard Customs introduces an AI-driven embedded system that automatically sca
   - Cloud-based AI detection (TensorFlow/YoloV8) to categorize items as taxable, restricted, or hazardous.
 
   - Immediate computation of estimated customs duties and automated logging.
-
-  - Secure RFID/NFC activation ensuring authorized access.
 
 ### Strategic Alignment
 
@@ -58,37 +56,33 @@ The project aligns with airport authorities' strategic goals by:
 
 - Revenue Increase: Improved accuracy in duty collection potentially increases revenue significantly.
 
-- Return on Investment (ROI): Expected ROI within 12-18 months, given reduced labor costs and increased customs duty collection accuracy.
 
 ---
 
 ## Functional Requirements:
 
-1. **User Authentication:**
-   * RFID/NFC-based activation system.
-   * Secure access limited to authorized customs officers.
 
-2. **Image Capture and Processing:**
+1. **Image Capture and Processing:**
 
    * Capture high-resolution images of open or partially open luggage using ESP32 with OV2640/OV5460 camera.
    * Immediate storage and uploading of captured images to Firebase Cloud Storage.
 
-3. **Embedded AI Object Detection:**
+2. **Embedded AI Object Detection:**
 
    * Detect and classify items such as electronics, luxury goods, liquids, sharp objects, hazardous items.
    * Real-time image analysis using YoloV8 AI model.
 
-4. **Customs Metadata Integration:**
+3. **Customs Metadata Integration:**
 
    * Identification of items with automated classification into taxable or hazardous categories.
    * Cross-reference with customs database for duty estimation and risk assessment.
 
-5. **Real-time Feedback and UI:**
+4. **Real-time Feedback and UI:**
 
    * On screen Smart display to show identified items, threat levels, and duty estimation.
    * Auditory and visual feedback (LED, speaker alerts).
 
-6. **Logging and Compliance:**
+5. **Logging and Compliance:**
 
    * Secure logging of each inspection with timestamps, item details, and duty assessments in Firebase Realtime Database.
 
@@ -98,7 +92,7 @@ The project aligns with airport authorities' strategic goals by:
 
 1. **Performance:**
 
-   * Real-time detection and UI response (target <5 seconds per luggage).
+   * Real-time detection and UI response (target <3 seconds per luggage).
    * High accuracy (>90%) in detection to avoid false positives or negatives.
 
 2. **Security:**
@@ -128,7 +122,6 @@ The project aligns with airport authorities' strategic goals by:
 The system is divided into clearly defined modules for simplicity and scalability:
 
 * **Embedded System Module (ESP32 with OV2640/OV5460)**
-  * RFID/NFC Authentication
   * Camera Capture
   * Image Upload (Firebase via HTTPS)
 
@@ -151,7 +144,7 @@ The system is divided into clearly defined modules for simplicity and scalabilit
 
 * **Input:**
 
-  * RFID/NFC reader via SPI.
+  * Button.
 * **Output:**
 
   * UART communication with display unit.
@@ -217,8 +210,7 @@ Customs Officer
 ### Sequence Diagram:
 
 ```
-Officer → RFID Reader: Tap RFID
-RFID Reader → ESP32: Activate
+Officer → Button 
 ESP32 → Camera (OV2640/OV5460): Capture Image
 Camera → ESP32: Image Data (JPEG)
 ESP32 → Firebase: Upload Image via HTTPS
@@ -232,7 +224,7 @@ ESP32 → Firebase: Log Event (DB)
 ### Component Diagram:
 
 ```
-[RFID Reader] ← SPI → [ESP32]
+
 [Camera Module] ← SPI/I2C → [ESP32]
 [ESP32] ← HTTPS → [Firebase Cloud Storage]
 [Firebase Cloud Storage] → [Cloud Run (Flask API + AI Model)]
@@ -242,19 +234,17 @@ ESP32 → Firebase: Log Event (DB)
 ---
 
 # Workflow Overview:
-1. **Authentication**: Officer taps RFID/NFC to activate.
-2. **Image Capture**: ESP32 initiates camera capture of luggage.
-3. **Cloud Upload**: Captured image uploaded securely to Firebase.
-4. **AI Inference**: Cloud-based AI identifies items and computes duties/threat level.
-5. **Feedback**: Results are displayed clearly on LCD and communicated via alerts.
-6. **Logging**: Transaction details are securely logged for compliance/auditing purposes.
+1. **Image Capture**: ESP32 initiates camera capture of luggage.
+2. **Cloud Upload**: Captured image uploaded securely to Firebase.
+3. **AI Inference**: Cloud-based AI identifies items and computes duties/threat level.
+4. **Feedback**: Results are displayed clearly on LCD and communicated via alerts.
+5. **Logging**: Transaction details are securely logged for compliance/auditing purposes.
 
 ---
 
 # Security Considerations:
 
 * Encrypted HTTPS communication.
-* Role-based access control for data viewing and interactions.
 * Secure Firebase storage with controlled access.
 * Audit logs for compliance and accountability.
 
@@ -273,4 +263,5 @@ ESP32 → Firebase: Log Event (DB)
 
 * GitHub Repository: [AeroGuard Customs Repo](https://github.com/InderParmar/aeroguard-customs)
 * Tools Used: Trello for task management; Arduino IDE, VS Code, Jupyter for software development.
+
 
